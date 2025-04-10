@@ -1,0 +1,30 @@
+# Компиляция и сборка
+/build/
+/target/
+
+# Логи
+*.log
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+
+# Артефакты Maven
+*.jar
+*.war
+*.ear
+
+# Артефакты Gradle
+.gradle/
+build/
+
+# Прочее
+*.bak
+*.swp
+*.swo
+*.tmp
