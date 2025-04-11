@@ -1,5 +1,9 @@
 package FlamyMap.com.pwflamy.task1;
 
+import FlamyMap.com.pwflamy.task1.dto.Creature;
+
+import java.util.*;
+
 /**
  * Данная реализация кеша должна сохранять все переданные значения с одинаковым ключем в список.
  * Требуется реализовать работу следующих методов:
@@ -15,7 +19,41 @@ package FlamyMap.com.pwflamy.task1;
  * <p>
  * Дополнительно переопределить метод toString, который будет описывать все содержимое кэша в виде строки
  */
-public class NewGenericCache<K, V> {
-
-
+public class NewGenericCache<K,V> {
+    private final Map<K, List<V>> cache;
+    public NewGenericCache(){
+        cache = new HashMap<>();
+    }
+    public void put(K key, V value) {
+        if (cache.containsKey(key)) {
+            List<V> list= cache.get(key);
+            list.add(value);
+        } else {
+            ArrayList<V> list = new ArrayList<>();
+            list.add(value);
+            cache.put(key,list);
+        }
+    }
+    public List<V> get(K key){
+        return cache.getOrDefault(key, Collections.emptyList());
+    }
+    public List<V> remove(K key){
+        return cache.remove(key);
+    }
+    public void clear(){
+        cache.clear();
+    }
+    public void putAll(K key, Collection<? extends V> values){
+        List<V> newValues = cache.computeIfAbsent(key, k -> new ArrayList<>());
+        newValues.addAll(values);
+    }
+    public void copyTo(NewGenericCache<? super K, ? super V> destination){
+        for(Map.Entry<K, List<V>> entry : this.cache.entrySet()){
+            K key = entry.getKey();
+            List<V> values = entry.getValue();
+            for(V value: values){
+                destination.put(key,value);
+            }
+        }
+    }
 }
