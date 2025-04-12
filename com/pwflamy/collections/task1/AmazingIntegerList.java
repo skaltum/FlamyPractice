@@ -16,17 +16,16 @@ public class AmazingIntegerList {
      * выбросить эксепшен, созданный специально для этого (создать самостоятельно).
      */
     public void add(Integer obj) {
-            if (obj == null) throw new IllegalArgumentException("Объект не должен равняться нулю");
-            if (list[list.length-1]!=null) throw new IndexOutOfBoundsException("Список полок");
-            for (int i = 0; i < list.length; ) {
-                if (list[i] == null) {
-                    list[i] = obj;
-                    break;
-                }
-                else  if(list[i]!=null) {
-                    i++;
-                }
+        if (obj == null) throw new IllegalArgumentException("Объект не должен равняться нулю");
+        if (list[list.length - 1] != null) throw new IndexOutOfBoundsException("Список полок");
+        for (int i = 0; i < list.length; ) {
+            if (list[i] == null) {
+                list[i] = obj;
+                break;
+            } else if (list[i] != null) {
+                i++;
             }
+        }
     }
 
     /**
@@ -45,7 +44,7 @@ public class AmazingIntegerList {
      */
     public Integer getLast() {
         if (list[0] == null) throw new RuntimeException("Список пуст");
-        for (int i=1;i<list.length; ) {
+        for (int i = 1; i < list.length; ) {
             if (list[i] == null) {
                 return list[i - 1];
             } else i++;
@@ -84,14 +83,13 @@ public class AmazingIntegerList {
      * Возвращает текущее количество элементов
      */
     public int size() {
-        if (list[0]==null) return 0;
-        int s=0;
-        for (int i=0; i<list.length; i++) {
+        if (list[0] == null) return 0;
+        int s = 0;
+        for (int i = 0; i < list.length; i++) {
             if (list[i] == null) {
-                s=i;
+                s = i;
                 break;
-            }
-            else s=list.length;
+            } else s = list.length;
         }
         return s;
     }
