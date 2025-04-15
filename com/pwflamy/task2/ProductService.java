@@ -1,5 +1,6 @@
 package FlamyMap.com.pwflamy.task2;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -7,6 +8,10 @@ import java.util.function.Predicate;
 /**
  * Задание на использования лямбд
  */
+@FunctionalInterface
+interface FuncInterface{
+    int enlarge(Product product, int i);
+}
 public class ProductService {
 
     /**
@@ -15,7 +20,13 @@ public class ProductService {
      * анонимного класса как предикат.
      */
     public List<Product> filterProductPriceMoreThan10(List<Product> products) {
-        return null;
+        Predicate<Product> anonClass = new Predicate<Product>() {
+            @Override
+            public boolean test(Product product) {
+                return product.getPrice() > 10;
+            }
+        };
+        return filterProducts(products,anonClass);
     }
 
     /**
@@ -26,8 +37,9 @@ public class ProductService {
      * Лямбду указать в виде ссылки на метод. Изучить различные типы ссылок на методы и определить какой тип используется в этом случае.
      * В идеале написать ссылку на метод своими силами, не давая подсказать IDE
      */
-    public List<Product> filterProductPriceLessThanMaxPrice(List<Product> products, int maxPrice) {
-        return null;
+    public List<Product> filterProductPriceLessThanMaxPrice(List<Product> products,final int maxPrice) {
+        Predicate<Product> lambda = (product) -> product.getPrice()<maxPrice;
+        return filterProducts(products,lambda);
     }
 
     /**
@@ -36,7 +48,8 @@ public class ProductService {
      * в виде лямбды.
      */
     public List<String> transformIntoNames(List<Product> products) {
-        return null;
+        Function<Product,String> link = (Product::getName);
+        return transform(products,link);
     }
 
     /**
@@ -45,8 +58,15 @@ public class ProductService {
      * Сделать реализацию метода, которая применяет эту лямбду к каждому элементу списка products и использует переменную i,
      * а результат выполнения лямбды сохраняет в результирующий список.
      */
-    public List<Integer> customFuncInterface(List<Product> products, Object lambda, int i) {
-        return null;
+    public List<Integer> customFuncInterface(List<Product> products, Object lambda,final int i) {
+        FuncInterface anonClass = (FuncInterface) lambda;
+        List<Integer> list = new ArrayList<>();
+        int result;
+        for(Product k:products){
+            result= anonClass.enlarge(k,i);
+            list.add(result);
+        }
+        return list;
     }
 
     /**
@@ -55,7 +75,13 @@ public class ProductService {
      * Исходный список продуктов не должен быть изменен.
      */
     private List<Product> filterProducts(List<Product> products, Predicate<Product> predicate) {
-        return null;
+        List<Product> list=new ArrayList<>();
+        for(Product i:products){
+            if(predicate.test(i)){
+                list.add(i);
+            }
+        }
+        return list;
     }
 
     /**
@@ -63,6 +89,12 @@ public class ProductService {
      * продукту в списке.
      */
     private <T> List<T> transform(List<Product> products, Function<Product, T> mapper) {
-        return null;
+        List<T> list = new ArrayList<>();
+        T prod;
+        for(Product i:products) {
+            prod = mapper.apply(i);
+            list.add(prod);
+        }
+        return list;
     }
 }

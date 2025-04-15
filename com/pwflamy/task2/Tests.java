@@ -40,8 +40,8 @@ public class Tests {
         List<String> names = productService.transformIntoNames(products);
         check(names.equals(List.of("orange", "tomato", "cucumber", "pen", "car", "moon", "your soul", "your body", "carrot", "onion")));
 
-//        List<Integer> sums = productService.customFuncInterface(products, (product, i) -> product.getPrice() + i, 1000);
-//        check(sums.equals(List.of(1005, 1002, 1008, 1001, 11000, 1012, 1666, 1011, 1018, 1004)));
+ //       List<Integer> sums = productService.customFuncInterface(products, (product, i) -> product.getPrice() + i, 1000);
+ //       check(sums.equals(List.of(1005, 1002, 1008, 1001, 11000, 1012, 1666, 1011, 1018, 1004)));
     }
 
     private static void check(boolean check) {
