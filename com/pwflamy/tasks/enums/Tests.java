@@ -1,5 +1,9 @@
 package FlamyMap.com.pwflamy.tasks.enums;
 
+import java.util.Scanner;
+
+import static FlamyMap.com.pwflamy.tasks.enums.CoffeeOrder.makeOrder;
+
 /**
  * Создай enum CoffeeType, в котором будут перечислены виды кофе, например:
  * ESPRESSO
@@ -18,6 +22,13 @@ package FlamyMap.com.pwflamy.tasks.enums;
 public class Tests {
 
     public static void main(String[] args) {
-
+        Scanner in = new Scanner(System.in);
+        System.out.println("Введите название кофе");
+        String order = in.nextLine();
+        in.close();
+        CoffeeType leOrder = CoffeeType.getType(order);
+        if (leOrder == null) {
+            System.out.println("Неверно введено название заказа");
+        } else makeOrder(leOrder);
     }
 }
