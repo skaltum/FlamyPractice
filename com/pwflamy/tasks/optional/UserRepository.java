@@ -1,5 +1,6 @@
 package FlamyMap.com.pwflamy.tasks.optional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +26,25 @@ public class UserRepository {
      * Для удобного форматирования используй String.format()
      */
     public String getUserAddressInfo(String name) {
-        return "";
+        Optional<User> user = findByName(name);
+        String result;
+        Optional<Address> address;
+        Optional<String> postalCode;
+        if(user.isEmpty()) {
+            result=String.format("Пользователь с именем %s не найден",name);
+            return result;
+        }
+        else {address = user.flatMap(User::getAddress);}
+        if(address.isEmpty()){
+            result=String.format("У пользователя %s нет адреса",name);
+            return result;}
+        else {postalCode = address.flatMap(Address::getPostalCode);}
+        if(postalCode.isEmpty()){
+            result=String.format("Пользователь %s живёт в %s, индекс неизвестен", name,address.get().getCity());
+            return result;}
+        else {
+            result = String.format("Пользователь %s живёт в %s, индекс: %s", name,address.get().getCity(),postalCode.get());
+            return result;}
     }
 
     /**
@@ -33,6 +52,9 @@ public class UserRepository {
      * в списке users - вернуть Optional.empty()
      */
     private Optional<User> findByName(String name) {
-        return null;
+        for(User i:users){
+            if(name == i.getName()){return Optional.of(i);}
+        }
+        return Optional.empty();
     }
 }
