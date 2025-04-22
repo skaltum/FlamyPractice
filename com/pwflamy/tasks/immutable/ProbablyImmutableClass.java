@@ -1,40 +1,31 @@
 package FlamyMap.com.pwflamy.tasks.immutable;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class ProbablyImmutableClass {
+public final class ProbablyImmutableClass {
 
-    private String id;
-    private int version;
-    private List<String> items;
+    private final String id;
+    private final int version;
+    private final List<String> items;
 
     public ProbablyImmutableClass(String id, int version, List<String> items) {
         this.id = id;
         this.version = version;
-        this.items = items;
+        this.items = List.copyOf(items);
     }
 
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public int getVersion() {
         return version;
     }
 
-    public void setVersion(int version) {
-        this.version = version;
-    }
-
     public List<String> getItems() {
-        return items;
+        return new ArrayList<>(items);
     }
 
-    public void setItems(List<String> items) {
-        this.items = items;
-    }
 }
