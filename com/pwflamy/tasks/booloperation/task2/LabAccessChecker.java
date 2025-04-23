@@ -43,6 +43,10 @@ class LabAccessChecker {
      *
      */
     public boolean hasLabAccess(Student student) {
-        return false;
+        return (student.isHasID() &&
+                ((student.getGrade() > 80 && student.isHonorsStudent()) ||
+                        student.isHasMedicalNote() && student.getMissedClasses() <= 3) ||
+                student.isHasSpecialPermission())
+                && !(student.isHasDisciplinaryNotice() && !student.isHasMedicalNote() && !student.isHonorsStudent());
     }
 }
