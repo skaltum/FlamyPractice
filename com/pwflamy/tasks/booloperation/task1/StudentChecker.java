@@ -15,23 +15,9 @@ class StudentChecker {
      * Данный метод должен вызывать минимально необходимое количество методов для определения результата.
      */
     public boolean isAllowedWithShortCircuit(Student student) {
-        boolean hasId = student.hasID();
-        if (hasId) {
-            if (student.hasPassingGrade()) {
-                return true;
-            }
-        }
-        if (hasId) {
-            if (student.isHonors()) {
-                return true;
-            }
-        }
-        if (hasId) {
-            if (student.hasMedicalNote()) {
-                return true;
-            }
-        }
-        return false;
+        //Вызывает ещё меньшее кол-во методов, чем требуется в задании
+        //return student.hasID && (student.hasPassingGrade() || student.isHonors() || student.hasMedicalNote);
+        return student.hasID() && (student.hasPassingGrade() || student.isHonors() || student.hasMedicalNote());
     }
 
     /**
@@ -42,25 +28,6 @@ class StudentChecker {
      * Данный метод должен вызывать все методы для определения результата, независимо от их результата.
      */
     public boolean isAllowedWithBitwise(Student student) {
-        boolean hasID = student.hasID();
-        boolean hasPassingGrade = student.hasPassingGrade();
-        boolean isHonors = student.isHonors();
-        boolean hasMedicalNote = student.hasMedicalNote();
-        if (hasID) {
-            if (hasPassingGrade) {
-                return true;
-            }
-        }
-        if (hasID) {
-            if (isHonors) {
-                return true;
-            }
-        }
-        if (hasID) {
-            if (hasMedicalNote) {
-                return true;
-            }
-        }
-        return false;
+        return student.hasID() & (student.hasPassingGrade() | student.isHonors() | student.hasMedicalNote());
     }
 }
