@@ -26,29 +26,38 @@ public class UserRepository {
      * Для удобного форматирования используй String.format()
      */
     public String getUserAddressInfo(String name) {
-        Optional<User> user = findByName(name);
-        String result;
-        Optional<Address> address;
-        Optional<String> postalCode;
-        if (user.isEmpty()) {
-            result = String.format("Пользователь с именем %s не найден", name);
-            return result;
-        } else {
-            address = user.flatMap(User::getAddress);
-        }
-        if (address.isEmpty()) {
-            result = String.format("У пользователя %s нет адреса", name);
-            return result;
-        } else {
-            postalCode = address.flatMap(Address::getPostalCode);
-        }
-        if (postalCode.isEmpty()) {
-            result = String.format("Пользователь %s живёт в %s, индекс неизвестен", name, address.get().getCity());
-            return result;
-        } else {
-            result = String.format("Пользователь %s живёт в %s, индекс: %s", name, address.get().getCity(), postalCode.get());
-            return result;
-        }
+        return findByName(name)
+                .map(u -> u.getAddress()
+                        .map(a -> a.getPostalCode()
+                                .map(postalCode -> String.format("Пользователь %s живёт в %s, индекс: %s",
+                                        u.getName(), a.getCity(), postalCode))
+                                .orElse(String.format("Пользователь %s живёт в %s, индекс неизвестен",
+                                        u.getName(), a.getCity())))
+                        .orElse(String.format("У пользователя %s нет адреса", u.getName())))
+        .orElse(String.format("Пользователь с именем %s не найден",name));
+//        Optional<User> user = findByName(name);
+//        String result;
+//        Optional<Address> address;
+//        Optional<String> postalCode;
+//        if (user.isEmpty()) {
+//            result = String.format("Пользователь с именем %s не найден", name);
+//            return result;
+//        } else {
+//            address = user.flatMap(User::getAddress);
+//        }
+//        if (address.isEmpty()) {
+//            result = String.format("У пользователя %s нет адреса", name);
+//            return result;
+//        } else {
+//            postalCode = address.flatMap(Address::getPostalCode);
+//        }
+//        if (postalCode.isEmpty()) {
+//            result = String.format("Пользователь %s живёт в %s, индекс неизвестен", name, address.get().getCity());
+//            return result;
+//        } else {
+//            result = String.format("Пользователь %s живёт в %s, индекс: %s", name, address.get().getCity(), postalCode.get());
+//            return result;
+//        }
     }
 
     /**
